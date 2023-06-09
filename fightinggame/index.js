@@ -142,6 +142,7 @@ function decreaseTimer() {
         timer -= 1;
         document.querySelector("#timer").innerHTML = timer
     }
+    
 
     if (timer===0){
         document.querySelector("#displayText").style.display = 'flex'
