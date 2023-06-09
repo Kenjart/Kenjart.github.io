@@ -135,26 +135,38 @@ function rectangularCollision ({ rectangle1, rectangle2 }) {
         //Vertical
     )
 }
-let = timer = 6
+function determineWinner({ player, enemy, timerId }) {
+    console.log('Is this even called?')
+    clearTimeout(timerId)
+
+    document.querySelector("#displayText").style.display = 'flex'
+    if (player.health === enemy.heatlh) {
+        document.querySelector("#displayText").innerHTML = 'Tie'
+        console.log('Tie')
+    }  else if (player.health > enemy.heatlh) {
+        document.querySelector("#displayText").innerHTML = 'Player 1 Wins'
+        console.log('Player 1 Wins')
+    }   else if (enemy.health > player.heatlh) {
+        document.querySelector("#displayText").innerHTML = 'Player 2 Wins'
+        console.log('Player 2 Wins')
+    }
+}
+let timer = 100
+let timerId 
 function decreaseTimer() {
     if (timer >0){
-        setTimeout(decreaseTimer, 1000);
+        timerId = setTimeout(decreaseTimer, 1000);
         timer -= 1;
         document.querySelector("#timer").innerHTML = timer
+
     }
     
 
     if (timer===0){
-        document.querySelector("#displayText").style.display = 'flex'
-        if (player.health === enemy.heatlh) {
-            document.querySelector("#displayText").innerHTML = 'Tie'
-        }
-    }   else if (player.health > enemy.heatlh) {
-        document.querySelector("#displayText").innerHTML = 'Player 1 Wins'
-        }    else if (enemy.health > player.heatlh) {
-            document.querySelector("#displayText").innerHTML = 'Player 2 Wins'
-        }
 
+        document.querySelector("#displayText").style.display = 'flex'
+        determineWinner({player, enemy})
+    }
 
 
 }
@@ -212,6 +224,13 @@ function animate() {
         player.health -=20
         document.querySelector('#playerHealth').style.width = player.health + '%'
         console.log('ouch')
+    }
+
+
+    //end game based off of health
+    if (enemy.health <= 0 || player.health <= 0) {
+        determineWinner({player, enemy, timerId })
+
     }
 }
 animate()
